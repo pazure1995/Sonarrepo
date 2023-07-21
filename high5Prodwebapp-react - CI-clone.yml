@@ -1,0 +1,48 @@
+trigger:
+  branches:
+    include:
+    - refs/heads/main
+  paths:
+    include:
+    - Frontend
+    exclude:
+    - Backend
+  batch: True
+name: $(date:yyyyMMdd)$(rev:.r)
+jobs:
+- job: Phase_1
+  displayName: Agent job 1
+  timeoutInMinutes: 0
+  pool:
+    vmImage: windows-latest
+  steps:
+  - checkout: self
+  - task: Npm@0
+    displayName: npm install
+    inputs:
+      cwd: Frontend
+      arguments: --force
+  - task: Npm@1
+    displayName: npm build
+    inputs:
+      command: custom
+      workingDir: Frontend
+      verbose: false
+      customCommand: run build
+  - task: ArchiveFiles@1
+    displayName: 'Archive files '
+    inputs:
+      rootFolder: Frontend\build
+      includeRootFolder: false
+  - task: CopyFiles@2
+    displayName: 'Copy Files to:  dist'
+    inputs:
+      SourceFolder: Frontend
+      Contents: web.config
+      TargetFolder: dist
+      OverWrite: true
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+    inputs:
+      TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
+...

@@ -1,0 +1,33 @@
+const express = require("express");
+const userRouter = require("./user/user.router");
+const questionRouter = require("./questions/questions.router");
+const skillRouter = require("./skills/skills.router");
+const assessmentRouter = require("./assessments/assessments.router");
+const projectRouter = require("./projects/projects.router");
+const candidateRouter = require("./candidates/candidates.router");
+const resultsRouter = require("./results/results.router");
+const videoRouter = require("./videos/videos.router");
+const dashboardRouter = require("./dashboard/dashboard.router");
+const chatRouter = require("./chatGpt/chatGPT.router");
+const high5router = require("./high5hire/high5hire.router");
+const sendMailRouter = require("./sendMail/sendMail.router");
+const supportsRouter = require("./supports/supports.router");
+const mailRequestRouter = require("./mailrequests/mailrequest.router");
+
+const apiRouter = express.Router();
+apiRouter.use("/users", userRouter);
+apiRouter.use("/questions", questionRouter);
+apiRouter.use("/skills", skillRouter);
+apiRouter.use("/assessments", assessmentRouter);
+apiRouter.use("/projects", projectRouter);
+apiRouter.use("/candidates", candidateRouter);
+apiRouter.use("/results", resultsRouter);
+apiRouter.use("/video", videoRouter);
+apiRouter.use("/dashboard", dashboardRouter);
+apiRouter.use("/chatGPT", chatRouter);
+apiRouter.use("/high5hire", high5router);
+apiRouter.use("/mail", sendMailRouter);
+apiRouter.use("/supports", supportsRouter);
+apiRouter.use("/request", mailRequestRouter);
+
+module.exports = apiRouter;
